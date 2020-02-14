@@ -7,6 +7,15 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax; 
 
 $gridColumns=[['class' => 'yii\grid\SerialColumn'], 
+[
+    'class' => 'kartik\grid\ExpandRowColumn',
+    'value' => function ($model, $key, $index, $column) {
+        return GridView::ROW_COLLAPSED;
+    },
+    'detail' => function ($model, $key, $index, $column) {
+        return $this->render('_item_view', ['model'=>$model->listPenjualan]);
+    },
+],
 'no_dokumen',
 'tanggal:date',
 [
