@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use app\models\customer;
 use app\models\Gudang;
+use yii\web\JsExpression;
 
 $customer = ArrayHelper::map(
     customer::find()->select(['id','ket'=> "concat(kode,' - ',nama)"])
@@ -56,4 +57,19 @@ $gudang = ArrayHelper::map(
         ],
     ])->label('Customer') ?>
    </div>
-   </div>
+</div>
+<?= \nullref\datatable\DataTable::widget([
+    'data' => \app\models\Barang::find()->all(),
+    'columns' => [
+        'id',
+        'kode',
+        'nama',
+        [
+        'class' => 'nullref\datatable\LinkColumn',
+        'queryParams' => ['id'],
+        'render' => new JsExpression('function render(data, type, row, meta ){
+            return "<a class= \"btn btn-success\" ><i class=\"fa fa-plus\"></a>"
+        }'),
+        ]
+    ],
+]) ?>
