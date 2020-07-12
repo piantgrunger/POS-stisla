@@ -55,7 +55,7 @@ $satuan = ArrayHelper::map(
         ],
     ]) ?>
     
-
+<!--
 <div class="panel panel-success"   >
 <div class="panel-heading"> Data Satuan Lain
 
@@ -88,6 +88,7 @@ $satuan = ArrayHelper::map(
     </table>
     </div>
     </div>
+        -->
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

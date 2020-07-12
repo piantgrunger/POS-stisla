@@ -102,6 +102,7 @@ $gudang = ArrayHelper::map(
     </table>
     </div>
     </div>
+    <!--
 <div class="row">
      <div class="col-md-6">
      <?=$form->field($model, 'jenis_ppn')->dropDownList(['PPN-IN' =>'PPN INCLUDE' , 'PPN-EX' =>'PPN EXCLUDE' ,'NON-PPN' =>'NON PPN']) ?>
@@ -111,9 +112,10 @@ $gudang = ArrayHelper::map(
 </div>
 </div>
      <?=$form->field($model, 'dpp') ?>
-     <?=$form->field($model, 'grand_total') ?>
+        -->
+     <?=$form->field($model, 'grand_total')->textInput(['readOnly'=>true]) ?>
 
-
+        
 
     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
     <div class="form-group">

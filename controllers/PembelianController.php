@@ -84,6 +84,7 @@ class PembelianController extends Controller
             return $this->redirect(['index']);
         } else {
             $model->tanggal = date("Y-m-d");
+            $model->jenis_ppn = 'NON-PPN';
             return $this->render('create', [
                 'model' => $model,
             ]);
