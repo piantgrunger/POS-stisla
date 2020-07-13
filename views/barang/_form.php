@@ -24,7 +24,7 @@ $satuan = ArrayHelper::map(
       ,'id'
       ,'ket'
   );
-  
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Barang */
 /* @var $form yii\widgets\ActiveForm */
@@ -54,7 +54,9 @@ $satuan = ArrayHelper::map(
             'allowClear' => true,
         ],
     ]) ?>
-    
+
+    <?= $form->field($model, 'harga_jual')->textInput(['maxlength' => true]) ?>
+
 <!--
 <div class="panel panel-success"   >
 <div class="panel-heading"> Data Satuan Lain
@@ -67,7 +69,7 @@ $satuan = ArrayHelper::map(
 
             <th>Satuan</th>
             <th>Konversi</th>
-          
+
 
             <th><a id="btn-add2" href="#"><i class="fa fa-plus"></i></a></th>
         </tr>

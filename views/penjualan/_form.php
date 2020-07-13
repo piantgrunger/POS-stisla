@@ -13,41 +13,26 @@ use yii\bootstrap4\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <?= $form->errorSummary($model) ?> <!-- ADDED HERE -->
 
-        <div class="row">
-              <div class="col-md-5">
-
               <?=$this->render('_input_detail',['form'=>$form,'model'=>$model])?>
               </div>
-              <div class="col-md-7">
-               
-                 
 
-                <h1>
-                    <div class="row">
-                                        <div class="col-md-2">Total</div>    
-                <div class="col-md-6">
-                <?=$form->field($model,'total')->textInput(['readOnly'=>true,
-'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->total)]
+<div class="card">
+<div class="card-header card-success"> Detail Barang</div>
 
-])->label(false) ?>
-                </div>
-                </div>
-
-            </h1>
-              <div class="panel-body">
+              <div class="card-body">
 <table class="table">
     <thead>
         <tr>
 
-            <th>Barang</th>
+            <th width='40%'>Barang</th>
             <th>Qty</th>
-            <th>Satuan</th>
             <th>Harga</th>
             <th>Sub Total</th>
 
             <th><a id="btn-add2" href="#"><span class="fa fa-plus"></span></a></th>
         </tr>
     </thead>
+    <tbody>
     <?= \mdm\widgets\TabularInput::widget([
         'id' => 'detail-grid',
         'allModels' => $model->listPenjualan,
@@ -61,18 +46,20 @@ use yii\bootstrap4\ActiveForm;
         ]
     ]);
 ?>
+</tbody>
+<tfoot>
 
+</tfoot>
 
     </table>
     </div>
     </div>
 
+    </div>
 
-              </div>
 
-        </div>
 
-   
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

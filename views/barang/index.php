@@ -16,6 +16,7 @@ $gridColumns=[['class' => 'kartik\grid\SerialColumn'],
                 'attribute' =>'Satuan Std.',
                 'value'=>'satuan_std.nama',
             ],
+            'harga_jual',
 
          ['class' => 'kartik\grid\ActionColumn',   'template' => Mimin::filterActionColumn([
               'update','delete','view'],$this->context->route),    ],    ];

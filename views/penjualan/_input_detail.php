@@ -34,7 +34,7 @@ $gudang = ArrayHelper::map(
 </div>
 <div class="col-md-6">
 <?= $form->field($model, 'tanggal')->widget(DateControl::classname()); ?>
- 
+
    </div>
    </div>
 <div class="row">
@@ -58,18 +58,3 @@ $gudang = ArrayHelper::map(
     ])->label('Customer') ?>
    </div>
 </div>
-<?= \nullref\datatable\DataTable::widget([
-    'data' => \app\models\Barang::find()->all(),
-    'columns' => [
-        'id',
-        'kode',
-        'nama',
-        [
-        'class' => 'nullref\datatable\LinkColumn',
-        'queryParams' => ['id'],
-        'render' => new JsExpression('function render(data, type, row, meta ){
-            return "<a class= \"btn btn-success\" ><i class=\"fa fa-plus\"></a>"
-        }'),
-        ]
-    ],
-]) ?>

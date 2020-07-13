@@ -34,7 +34,7 @@ widget(TouchSpin::classname(), [
 
     'onChange' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
     ,'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->qty)]
-    
+
 ],
     'pluginOptions' => [
         'verticalbuttons' => true,
@@ -54,22 +54,6 @@ textInput([
 </td>
 
 
-<td>
-<?= $form->field($model, "[$key]id_satuan")->widget(DepDrop::className(), [    'type' => DepDrop::TYPE_SELECT2,
-        'data' => [$model->id_satuan => is_null($model->id_satuan) ? "--" : $model->satuan->nama],
-        'options' => ['placeholder' => 'Pilih Satuan ...'],
-        'select2Options' => ['pluginOptions' => ['allowClear' => true],
-                           ],
-        'pluginOptions' => [
-            'depends' => ['itempenjualan-'.$key.'-id_barang'],
-            'url' => Url::to(['/penjualan/satuan']),
-            'placeholder' => 'Pilih Satuan ...',
-            'initialize' => true,
-        ],
-    ])->label(false)
-    ?>
-
-</td>
 <td>
 <?= $form->field($model, "[$key]harga")->textInput([
 

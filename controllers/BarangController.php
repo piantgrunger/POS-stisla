@@ -65,12 +65,12 @@ class BarangController extends Controller
     {
         $model = new Barang();
 
- 
+
         if ($model->load(Yii::$app->request->post()) ) {
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model->listSatuanBarang = Yii::$app->request->post('ItemSatuanBarang', []);
+               // $model->listSatuanBarang = Yii::$app->request->post('ItemSatuanBarang', []);
                 if (($model->save())) {
                     $transaction->commit();
                     return $this->redirect(['index']);
@@ -103,7 +103,7 @@ class BarangController extends Controller
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model->listSatuanBarang = Yii::$app->request->post('ItemSatuanBarang', []);
+                //$model->listSatuanBarang = Yii::$app->request->post('ItemSatuanBarang', []);
                 if (($model->save())) {
                     $transaction->commit();
                     return $this->redirect(['index']);
@@ -115,7 +115,7 @@ class BarangController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
-            
+
         } else {
             return $this->render('update', [
                 'model' => $model,

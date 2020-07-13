@@ -35,8 +35,9 @@ class Barang extends \yii\db\ActiveRecord
             [['id_jenis_barang'], 'integer'],
             [['kode'], 'string', 'max' => 5],
             [['nama'], 'string', 'max' => 50],
+            [['harga_jual'],'number'],
             [['kode','nama'], 'unique'],
-            [['kode','nama','id_jenis_barang','id_satuan_std'], 'required'],
+            [['kode','nama','id_jenis_barang','id_satuan_std','harga_jual'], 'required'],
             [['id_jenis_barang'], 'exist', 'skipOnError' => true, 'targetClass' => JenisBarang::className(), 'targetAttribute' => ['id_jenis_barang' => 'id']],
         ];
     }
@@ -66,10 +67,10 @@ class Barang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Satuan::className(), ['id' => 'id_satuan_std']);
     }
-    public function getListSatuanBarang() 
-    { 
+    public function getListSatuanBarang()
+    {
         return $this->hasMany(ItemSatuanBarang::className(), ['id_barang' => 'id']);
-    } 
+    }
     public function setListSatuanBarang($value)
     {
         $this->loadRelated('listSatuanBarang',$value);
