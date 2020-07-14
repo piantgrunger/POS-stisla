@@ -6,12 +6,12 @@ use yii\bootstrap4\ActiveForm;
 use kartik\datecontrol\DateControl;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-use app\models\customer;
+use app\models\Customer;
 use app\models\Gudang;
 use yii\web\JsExpression;
 
 $customer = ArrayHelper::map(
-    customer::find()->select(['id','ket'=> "concat(kode,' - ',nama)"])
+    Customer::find()->select(['id','ket'=> "concat(kode,' - ',nama)"])
   ->asArray()
   ->all(),
     'id',
