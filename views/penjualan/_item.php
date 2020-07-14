@@ -14,13 +14,38 @@ $barang = ArrayHelper::map(
     'ket'
 );
 
+
+
+
+$js = "    
+     
+    $.post( '".Url::to(['penjualan/get-harga'])."?id=' +$(this).val(), function(data) {
+                                                      data1 = JSON.parse(data)
+                                                      $( '#itempenjualan-$key-harga' ).val(data1.harga_jual);
+                                                      $('#satuan-$key' ).html(data1.nama_satuan);
+                                                      $( '#itempenjualan-$key-id_satuan' ).val(data1.id_satuan_std);
+                                                      
+    }
+    );
+                    ";
+
+
+
 ?>
+
+
+
+
 <td>
 <?= $form->field($model, "[$key]id_barang")->widget(Select2::className(), [
         'data' => $barang,
-        'options' => ['placeholder' => 'Pilih Barang...'],
+        'options' => ['placeholder' => 'Pilih Barang...',
+        'onChange' => $js,
+      ],
+       
         'pluginOptions' => [
             'allowClear' => true,
+          
         ],
     ])->label(false);
  ?>
@@ -42,14 +67,11 @@ widget(TouchSpin::classname(), [
         'verticaldown' => '<i class="fas fa-minus"></i>'
     ]
 ])->label(false);
-
-/*
-textInput([
-
-'onChange' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
-,'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->qty)]
-
-])->label(false); */?>
+?>
+</td>
+<td>
+<span id="satuan-<?=$key?>" ></span>
+  <?= $form->field($model,"[$key]id_satuan")->hiddenInput()->label(false) ?>
 
 </td>
 

@@ -35,7 +35,7 @@ class ItemPenjualan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_barang', 'id_satuan'], 'required'],
+            [['id_barang'], 'required'],
             [['id_penjualan', 'id_barang', 'id_satuan'], 'integer'],
             [['qty', 'harga', 'sub_total'], 'number'],
             [['id_penjualan'], 'exist', 'skipOnError' => true, 'targetClass' => Penjualan::className(), 'targetAttribute' => ['id_penjualan' => 'id']],

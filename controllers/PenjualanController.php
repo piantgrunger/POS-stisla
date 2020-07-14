@@ -82,6 +82,8 @@ class PenjualanController extends Controller
                 'model' => $model,
             ]);
         } else {
+            $model->tanggal = date("Y-m-d");
+        
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -95,6 +97,18 @@ class PenjualanController extends Controller
      * @return mixed
      */
 
+
+    public function actionGetHarga($id)
+    {
+        $model = \app\models\Barang::findOne(['id' => $id]);
+
+        return Json::encode([
+            'harga_jual' => $model->harga_jual,
+            'nama_satuan' => $model->satuan_std->nama,
+            'id_satuan_std' => $model->id_satuan_std,
+            
+        ]);
+    }
      
     public function actionSatuan()
     {

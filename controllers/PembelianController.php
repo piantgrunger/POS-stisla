@@ -69,6 +69,8 @@ class PembelianController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
+                $model->jenis_ppn = 'NON-PPN';
+       
                 $model->listPembelian = Yii::$app->request->post('ItemPembelian', []);
                 if (($model->save())) {
                     $transaction->commit();
@@ -84,8 +86,7 @@ class PembelianController extends Controller
             return $this->redirect(['index']);
         } else {
             $model->tanggal = date("Y-m-d");
-            $model->jenis_ppn = 'NON-PPN';
-            return $this->render('create', [
+           return $this->render('create', [
                 'model' => $model,
             ]);
         }
