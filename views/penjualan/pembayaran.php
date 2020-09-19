@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         'autofocus' => 'autofocus',
         'tabindex' => '1',
         ]
-])->textInput(['maxlength' => true,'onKeyPress'=>"
+])->textInput(['maxlength' => true,'onKeyUp'=>"
       val = parseFloat($(this).val())-  parseFloat($('#penjualan-total').val());
       $('#penjualan-kembali').val(val);
 

@@ -22,7 +22,9 @@
                'icon' => 'archive',
                'url' => '#',
                'items' => [
-               ['label' => 'Jenis Barang', 'icon' => 'database', 'url' => ['/jenis-barang/index'], 'visible' => !Yii::$app->user->isGuest],
+                ['label' => 'Setting', 'icon' => 'cog', 'url' => ['/setting/index'], 'visible' => !Yii::$app->user->isGuest],
+           
+                ['label' => 'Jenis Barang', 'icon' => 'database', 'url' => ['/jenis-barang/index'], 'visible' => !Yii::$app->user->isGuest],
                ['label' => 'Satuan', 'icon' => 'cube', 'url' => ['/satuan/index'], 'visible' => !Yii::$app->user->isGuest],
          
                ['label' => 'Barang', 'icon' => 'briefcase', 'url' => ['/barang/index'], 'visible' => !Yii::$app->user->isGuest],
