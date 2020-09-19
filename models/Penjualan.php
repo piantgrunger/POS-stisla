@@ -22,7 +22,11 @@ class Penjualan extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
+     * 
      */
+
+    public $barcode;
+
     use \mdm\behaviors\ar\RelationTrait;
 
     public static function tableName()
@@ -38,6 +42,7 @@ class Penjualan extends \yii\db\ActiveRecord
         return [
             [['no_dokumen', 'id_customer', 'id_gudang'], 'required'],
             [['tanggal'], 'safe'],
+            [['total','bayar','kembali'],'required','on'=>'pembayaran'],
             [['id_customer', 'id_gudang'], 'integer'],
             [['keterangan'], 'string'],
             [['no_dokumen'], 'string', 'max' => 50],
@@ -77,7 +82,7 @@ class Penjualan extends \yii\db\ActiveRecord
         $this->loadRelated('listPenjualan', $value);
     }
 
-    public function getTotal() {
+    public function getTotalPenjualan() {
         return $this->hasMany(ItemPenjualan::className(), ['id_penjualan' => 'id'])->sum('sub_total');
     }
 

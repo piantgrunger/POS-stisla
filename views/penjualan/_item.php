@@ -57,7 +57,7 @@ widget(TouchSpin::classname(), [
     'options'=>['placeholder'=>'Qty',
 
 
-    'onChange' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
+    'onkeyPress' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
     ,'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->qty)]
 
 ],
@@ -70,7 +70,7 @@ widget(TouchSpin::classname(), [
 ?>
 </td>
 <td>
-<span id="satuan-<?=$key?>" ></span>
+<span id="satuan-<?=$key?>" ><?=is_null($model->barang)?"":$model->barang->satuan_std->nama?></span>
   <?= $form->field($model,"[$key]id_satuan")->hiddenInput()->label(false) ?>
 
 </td>

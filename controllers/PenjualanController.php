@@ -72,7 +72,7 @@ class PenjualanController extends Controller
                 $model->listPenjualan = Yii::$app->request->post('ItemPenjualan', []);
                 if (($model->save())) {
                     $transaction->commit();
-                    return $this->redirect(['index']);
+                    return $this->redirect(['pembayaran','id'=>$model->id]);
                 }
             } catch (\Exception $ecx) {
                 $transaction->rollBack();
@@ -82,7 +82,7 @@ class PenjualanController extends Controller
                 'model' => $model,
             ]);
         } else {
-            $model->tanggal = date("Y-m-d");
+            $model->tanggal = date('Y-m-d');
         
             return $this->render('create', [
                 'model' => $model,
@@ -97,6 +97,25 @@ class PenjualanController extends Controller
      * @return mixed
      */
 
+    public function actionPembayaran($id)
+    {
+        $model = $this->findModel($id);
+        $model->scenario ='pembayaran';
+        if ($model->load(Yii::$app->request->post())) {
+           
+            if ($model->save()) {
+                $this->redirect('index');
+            }
+        }
+
+        $model->total = $model->totalPenjualan;  
+        return $this->render(
+            'pembayaran',
+            [
+              'model' => $model,
+            ]
+        );
+    }
 
     public function actionGetHarga($id)
     {
@@ -109,6 +128,13 @@ class PenjualanController extends Controller
             
         ]);
     }
+
+    public function actionGetBarang($kode)
+    {
+        $model = \app\models\Barang::find() ->with(['satuan_std']) ->where(['kode' => $kode])->asArray()->one();
+
+        return Json::encode($model);
+    }
      
     public function actionSatuan()
     {
@@ -118,7 +144,7 @@ class PenjualanController extends Controller
             $out = [];
             $data = \app\models\ItemSatuanBarang::find()
                 ->select([
-                    'id' => 'satuan.id', 'name' => "nama",
+                    'id' => 'satuan.id', 'name' => 'nama',
                 ])
                 ->innerJoin('satuan', 'item_satuan_barang.id_satuan = satuan.id ')
                 ->where(['id_barang' => $id])
@@ -129,7 +155,7 @@ class PenjualanController extends Controller
             }
             $data = \app\models\Barang::find()
                 ->select([
-                    'id' => 'id_satuan_std', 'name' => "satuan.nama",
+                    'id' => 'id_satuan_std', 'name' => 'satuan.nama',
                 ])
                 ->innerJoin('satuan', 'barang.id_satuan_std = satuan.id ')
                 ->where(['barang.id' => $id])
@@ -163,7 +189,7 @@ class PenjualanController extends Controller
                 $model->listPenjualan = Yii::$app->request->post('ItemPenjualan', []);
                 if (($model->save())) {
                     $transaction->commit();
-                    return $this->redirect(['index']);
+                    return $this->redirect(['pembayaran','id'=>$model->id]);
                 }
             } catch (\Exception $ecx) {
                 $transaction->rollBack();
@@ -188,15 +214,11 @@ class PenjualanController extends Controller
     public function actionDelete($id)
     {
         
-       try
-      {
-        $this->findModel($id)->delete();
-      
-      }
-      catch(\yii\db\IntegrityException  $e)
-      {
-	Yii::$app->session->setFlash('error', "Data Tidak Dapat Dihapus Karena Dipakai Modul Lain");
-       } 
+        try {
+            $this->findModel($id)->delete();
+        } catch (\yii\db\IntegrityException  $e) {
+            Yii::$app->session->setFlash('error', 'Data Tidak Dapat Dihapus Karena Dipakai Modul Lain');
+        }
          return $this->redirect(['index']);
     }
 
