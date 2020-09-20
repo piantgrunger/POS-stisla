@@ -185,7 +185,7 @@ class PenjualanController extends Controller
 
     public function actionGetBarang($kode)
     {
-        $model = \app\models\Barang::find() ->with(['satuan_std']) ->where(['kode' => $kode])->asArray()->one();
+        $model = \app\models\Barang::find() ->with(['satuan_std']) ->where(['barcode' => $kode])->asArray()->one();
 
         return Json::encode($model);
     }

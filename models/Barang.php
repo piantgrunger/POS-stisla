@@ -34,7 +34,7 @@ class Barang extends \yii\db\ActiveRecord
         return [
             [['id_jenis_barang'], 'integer'],
             [['kode'], 'string', 'max' => 5],
-            [['nama'], 'string', 'max' => 50],
+            [['nama','barcode'], 'string', 'max' => 50],
             [['harga_jual'],'number'],
             [['kode','nama'], 'unique'],
             [['kode','nama','id_jenis_barang','id_satuan_std','harga_jual'], 'required'],

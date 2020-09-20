@@ -56,6 +56,7 @@ $satuan = ArrayHelper::map(
     ]) ?>
 
     <?= $form->field($model, 'harga_jual')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'barcode')->textInput(['maxlength' => true]) ?>
 
 <!--
 <div class="panel panel-success"   >

@@ -5,6 +5,7 @@ use hscstudio\mimin\components\Mimin;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+
 $gridColumns=[['class' => 'kartik\grid\SerialColumn'],
             'kode',
             'nama',
@@ -16,7 +17,17 @@ $gridColumns=[['class' => 'kartik\grid\SerialColumn'],
                 'attribute' =>'Satuan Std.',
                 'value'=>'satuan_std.nama',
             ],
-            'harga_jual',
+             [
+               'attribute' => "barcode",
+               'format' =>'raw',
+               'value' => function($model) {
+                 $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                 return '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($model->barcode, $generator::TYPE_CODE_128)) . '">';
+                 
+               }
+               
+             ], 
+            'harga_jual:decimal',
 
          ['class' => 'kartik\grid\ActionColumn',   'template' => Mimin::filterActionColumn([
               'update','delete','view'],$this->context->route),    ],    ];
@@ -62,3 +73,4 @@ $this->params['breadcrumbs'][] = $this->title;
  ?>
     <?php Pjax::end(); ?>
 </div>
+s
