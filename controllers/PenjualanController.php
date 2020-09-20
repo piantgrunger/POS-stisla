@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\models\Setting;
+use kartik\mpdf\Pdf;
 
 /**
  * PenjualanController implements the CRUD actions for Penjualan model.
@@ -114,7 +115,8 @@ class PenjualanController extends Controller
         if ($model->load(Yii::$app->request->post())) {
            
             if ($model->save()) {
-                $this->redirect('index');
+                    return $this->redirect(['print','id'=>$model->id]);
+              
             }
         }
 
@@ -127,6 +129,48 @@ class PenjualanController extends Controller
         );
     }
 
+    public function actionPrint($id)
+    {
+      $content = $this->renderPartial('print',[
+            'model'=>$this->findModel($id),
+            'setting' => (Setting::find()->one())
+             
+      ]);
+            $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            //     'cssFile' => '@app/web/css/print.css',
+            'defaultFont' => 'Arial',
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
+
+            // any css to be embedded if required
+            'cssInline' => ' .page
+          {
+            height:200mm;
+            width:40mm;
+            page-break-after:always;
+          }',
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Cetak  '],
+            // call mPDF methods on the fly
+        ]);
+
+        return  $pdf->render();
+      
+      
+      
+    }
+  
     public function actionGetHarga($id)
     {
         $model = \app\models\Barang::findOne(['id' => $id]);

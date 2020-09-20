@@ -88,7 +88,11 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-       
+           'formatter' => [
+            'dateFormat' => 'dd MMMM yyyy',
+            'nullDisplay' => '',
+
+        ],
         
        'authManager' => [
         'class' => 'yii\rbac\DbManager', // only support DbManager
