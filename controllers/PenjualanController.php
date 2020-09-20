@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use app\models\Setting;
 
 /**
  * PenjualanController implements the CRUD actions for Penjualan model.
@@ -65,6 +66,9 @@ class PenjualanController extends Controller
     public function actionCreate()
     {
         $model = new Penjualan();
+        $default = Setting::find()->one();
+      
+      
 
         if ($model->load(Yii::$app->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -78,12 +82,18 @@ class PenjualanController extends Controller
                 $transaction->rollBack();
                 throw $ecx;
             }
+            $model->no_dokumen = $default->no_penjualan;
+          
             return $this->render('create', [
                 'model' => $model,
             ]);
         } else {
             $model->tanggal = date('Y-m-d');
-        
+            $model->id_gudang = $default->gudang_default;
+            $model->id_customer = $default->customer_default;
+            $model->no_dokumen = $default->no_penjualan;
+          
+            
             return $this->render('create', [
                 'model' => $model,
             ]);

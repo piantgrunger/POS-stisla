@@ -18,6 +18,25 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 ?>
 
+<table  class="table table-bordered table-hover kv-grid-table kv-table-wrap">
+  <thead>
+    <th width='40%'>Barang</th>
+            <th>Qty</th>
+            <th>Satuan</th>
+            <th>Harga</th>
+            <th>Sub Total</th>
+  </thead>
+  <tbody>
+      <?php foreach($model->listPenjualan as $data) { ?>
+       <th width='40%'><?=$data->barang->nama?></th>
+            <th><?=$data->qty?></th>
+            <th><?=$data->satuan->nama?></th>
+ <td align="right"><?= yii::$app->formatter->asDecimal($data->harga, 2)?></td>
+     <td align="right"><?=yii::$app->formatter->asDecimal($data->sub_total, 2)?></td>
+    <?php } ?>
+  </tbody>
+</table>
+
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => false,
 ]); ?>

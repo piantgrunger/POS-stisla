@@ -54,6 +54,8 @@ $gudang = ArrayHelper::map(
             'allowClear' => true,
         ],
     ]) ?>
+  
+      <?= $form->field($model, 'no_dok_penjualan')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
