@@ -29,7 +29,7 @@ $gridColumns=[['class' => 'yii\grid\SerialColumn'],
             // 'keterangan:ntext',
 
          ['class' => 'kartik\grid\ActionColumn',   'template' => Mimin::filterActionColumn([
-              'update','delete','view'],$this->context->route),    ],    ]; 
+              'update','delete'],$this->context->route),    ],    ]; 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PenjualanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

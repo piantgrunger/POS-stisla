@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\widgets\Pjax; 
 
 use kartik\datecontrol\DateControl;
 use kartik\select2\Select2;
@@ -10,6 +11,33 @@ use app\models\Customer;
 use app\models\Gudang;
 use yii\web\JsExpression;
 use yii\helpers\Url;
+use yii\bootstrap4\Modal;
+
+
+$this->registerCss('
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 500px;
+    overflow-y: auto;
+}');
+
+$js = <<<JS
+$('#modal').insertAfter($('body'));
+  $("#modal").on("shown.bs.modal",function(event){
+           event.preventDefault();
+       var button = $(event.relatedTarget);
+       var href = button.attr("href");
+       $.pjax.reload("#pjax-modal",{
+                 "timeout" : false,
+                 "url" :href,
+                 "replace" :false,
+       });
+  });
+JS;
+$this->registerJs($js);
 
 $customer = ArrayHelper::map(
     Customer::find()->select(['id','ket'=> "concat(kode,' - ',nama)"])
@@ -54,7 +82,7 @@ $js = "
                                                '<div class=\"form-group field-itempenjualan-'+i+'-qty validating\">'+
 
 '<div class=\"input-group  bootstrap-touchspin bootstrap-touchspin-injected\">'+
-'<input type=\"text\" id=\"itempenjualan-'+i+'-qty\" class=\"form-control \" name=\"ItemPenjualan['+i+'][qty]\" value=\"1\" placeholder=\"Qty\" onkeypress=\" var total =  parseFloat($(this).val())*parseFloat($(&quot;#itempenjualan-'+i+'-harga&quot;).val()) ; $(&quot;#itempenjualan-'+i+'-sub_total&quot;).val(total)   \" inputoptions=\"{&quot;value&quot;:&quot;1&quot;}\" data-krajee-touchspin=\"TouchSpin_d78e8e3c\" aria-invalid=\"false\"><span class=\"input-group-addon input-group-append\"></div>'+
+'<input type=\"text\" id=\"itempenjualan-'+i+'-qty\" class=\"form-control \" name=\"ItemPenjualan['+i+'][qty]\" value=\"1\" placeholder=\"Qty\" onkeyup=\" var total =  parseFloat($(this).val())*parseFloat($(&quot;#itempenjualan-'+i+'-harga&quot;).val()) ; $(&quot;#itempenjualan-'+i+'-sub_total&quot;).val(total)   \" inputoptions=\"{&quot;value&quot;:&quot;1&quot;}\" data-krajee-touchspin=\"TouchSpin_d78e8e3c\" aria-invalid=\"false\"><span class=\"input-group-addon input-group-append\"></div>'+
 '</div>'+
                                                '</td>'+
 
@@ -151,8 +179,12 @@ $js = "
 
 <div class="card">
 
-<div class="col-md-12"> <?=$form->field($model, 'barcode')->textInput(['onKeyDown'=> "$js"])?></div>
+  <div class="col-md-12">
+    <?=$form->field($model, 'barcode')->textInput(['onKeyDown'=> "$js"])?>
 
+
+  
+  
               <div class="card-body">
 <table  id="table-barang" class="table table-bordered table-hover kv-grid-table kv-table-wrap">
     <thead>
@@ -202,3 +234,23 @@ $js = "
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+<?php
+
+Modal::begin([
+    'id' => 'modal',
+    
+       'size' => 'modal-lg',
+]);
+
+Pjax::begin(
+    [
+    'id' => 'pjax-modal',
+    'enablePushState' => 'false',
+  
+    ]
+);
+Pjax::end();
+?>
+    <?php Modal::end(); ?>

@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\models\Setting;
 use kartik\mpdf\Pdf;
+use app\models\BarangSearch;
+use yii\helpers\Url;
 
 /**
  * PenjualanController implements the CRUD actions for Penjualan model.
@@ -64,7 +66,7 @@ class PenjualanController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id=null)
     {
         $model = new Penjualan();
         $default = Setting::find()->one();
@@ -94,6 +96,20 @@ class PenjualanController extends Controller
             $model->id_customer = $default->customer_default;
             $model->no_dokumen = $default->no_penjualan;
           
+           if($id!== null) {
+             
+                  
+            $url= Url::to(['print','id'=>$id]);
+            $script = "
+            function openInNewTab(url) {
+              var win = window.open(url, '_blank');
+              win.focus();
+            }
+             openInNewTab('$url');
+          ";
+          $this->getView()->registerJs( $script , \yii\web\View::POS_READY );
+           }
+          
             
             return $this->render('create', [
                 'model' => $model,
@@ -107,6 +123,20 @@ class PenjualanController extends Controller
      * @param integer $id
      * @return mixed
      */
+  
+     public function actionBrowseBarang()
+     {
+     
+        $searchModel = new BarangSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderAjax('browse-barang', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+     
+     
+     }
 
     public function actionPembayaran($id)
     {
@@ -115,7 +145,8 @@ class PenjualanController extends Controller
         if ($model->load(Yii::$app->request->post())) {
            
             if ($model->save()) {
-                    return $this->redirect(['print','id'=>$model->id]);
+         
+             return $this->redirect(['create','id'=>$id]);
               
             }
         }

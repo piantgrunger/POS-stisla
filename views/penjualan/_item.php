@@ -53,19 +53,13 @@ $js = "
 </td>
 <td>
 <?= $form->field($model, "[$key]qty")->
-widget(TouchSpin::classname(), [
-    'options'=>['placeholder'=>'Qty',
+textInput( [
+    'options'=>['placeholder'=>'Qty'],
 
 
-    'onkeyPress' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
-    ,'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->qty)]
+    'onkeyUp' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-harga").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   '
 
-],
-    'pluginOptions' => [
-        'verticalbuttons' => true,
-        'verticalup' => '<i class="fas fa-plus"></i>',
-        'verticaldown' => '<i class="fas fa-minus"></i>'
-    ]
+    
 ])->label(false);
 ?>
 </td>
@@ -79,7 +73,7 @@ widget(TouchSpin::classname(), [
 <td>
 <?= $form->field($model, "[$key]harga")->textInput([
 
-'onChange' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-qty").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   ',
+'onKeyup' => ' var total =  parseFloat($(this).val())*parseFloat($("#itempenjualan-' . $key . '-qty").val()) ; $("#itempenjualan-' . $key . '-sub_total").val(total)   ',
 'inputOptions' => ['value' => Yii::$app->formatter->asDecimal($model->harga)]
 
 ])->label(false); ?>
