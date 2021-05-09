@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="penjualan-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([

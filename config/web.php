@@ -7,6 +7,10 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'Template',
     'name' => 'Application',
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm'   => '@vendor/npm-asset',
+    ],
     // set target language to be Indonesia
   'language' => 'id-ID',
     'as access' => [
